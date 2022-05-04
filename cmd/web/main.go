@@ -21,6 +21,9 @@ func main() {
 	conf.TemplateCache = tc
 	render.GenerateTemplates(&conf)
 
+	repo := handlers.NewRepo(&conf)
+	handlers.NewHandlers(repo)
+
 	http.HandleFunc("/about", handlers.AboutHandler)
 	http.HandleFunc("/", handlers.HelloHandler)
 	log.Printf("Serving on %s", portNum)
