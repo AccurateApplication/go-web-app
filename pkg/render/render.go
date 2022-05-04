@@ -2,7 +2,6 @@ package render
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -49,9 +48,7 @@ func CreateTmplCache() (map[string]*template.Template, error) {
 	}
 
 	for _, page := range pages {
-		fmt.Println("After range over pages")
 		pageName := filepath.Base(page)
-		fmt.Println(pageName)
 
 		// Get template set.
 		ts, err := template.New(pageName).Funcs(funcMap).ParseFiles(page)
@@ -60,7 +57,6 @@ func CreateTmplCache() (map[string]*template.Template, error) {
 		}
 
 		matches, err := filepath.Glob(layoutPath)
-		fmt.Println(matches)
 		if err != nil {
 			return cache, err
 		}
