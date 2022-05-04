@@ -6,27 +6,32 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/AccurateApplication/go-web-app/pkg/config"
 )
 
 var funcMap = template.FuncMap{}
 
+var conf *config.AppConf
+
+// GenerateTemplates sets the config for the render package
+func GenerateTemplates(c *config.AppConf) {
+	conf = c
+}
+
 // RenderTemplate renders a template
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	// TODO Fix - for now, a template cache every time a site is loaded, bad
-	tmplCache, err := CreateTmplCache()
-	if err != nil {
-		log.Fatalln("Error creating template cache: ", err)
-	}
+	tmplCache := conf.TemplateCache
 
 	t, ok := tmplCache[tmpl]
 	if !ok {
-		log.Fatalln("Could not find template, err: ", err)
+		log.Fatalf("Could not find template in map with value: %v\n", tmplCache[tmpl])
 	}
 
 	buf := new(bytes.Buffer)
 
 	_ = t.Execute(buf, nil)
-	_, err = buf.WriteTo(w)
+	_, err := buf.WriteTo(w)
 
 	if err != nil {
 		log.Println(err)
@@ -68,7 +73,6 @@ func CreateTmplCache() (map[string]*template.Template, error) {
 			}
 			cache[pageName] = ts
 		}
-		cache[pageName] = ts
 
 	}
 	return cache, nil
