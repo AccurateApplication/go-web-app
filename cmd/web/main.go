@@ -24,8 +24,8 @@ func main() {
 	repo := handlers.NewRepo(&conf)
 	handlers.NewHandlers(repo)
 
-	http.HandleFunc("/about", handlers.AboutHandler)
-	http.HandleFunc("/", handlers.HelloHandler)
+	http.HandleFunc("/about", handlers.Repo.AboutHandler)
+	http.HandleFunc("/", handlers.Repo.HelloHandler)
 	log.Printf("Serving on %s", portNum)
 	http.ListenAndServe(portNum, nil)
 

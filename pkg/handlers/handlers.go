@@ -27,10 +27,10 @@ func NewHandlers(r *Repository) {
 
 }
 
-func HelloHandler(w http.ResponseWriter, r *http.Request) {
+func (rep *Repository) HelloHandler(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "home.page.tmpl")
 }
 
-func AboutHandler(w http.ResponseWriter, r *http.Request) {
+func (rep *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "about.page.tmpl")
 }
