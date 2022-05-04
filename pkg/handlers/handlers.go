@@ -1,13 +1,15 @@
-package main
+package handlers
 
 import (
 	"net/http"
+
+	"github.com/AccurateApplication/go-web-app/pkg/render"
 )
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "home.page.tmpl")
+func HelloHandler(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "home.page.tmpl")
 }
 
-func aboutHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "about.page.tmpl")
+func AboutHandler(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "about.page.tmpl")
 }
