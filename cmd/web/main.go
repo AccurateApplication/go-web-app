@@ -24,9 +24,13 @@ func main() {
 	repo := handlers.NewRepo(&conf)
 	handlers.NewHandlers(repo)
 
-	http.HandleFunc("/about", handlers.Repo.AboutHandler)
-	http.HandleFunc("/", handlers.Repo.HelloHandler)
+	s := &http.Server{
+		Handler: routes(&conf),
+		Addr:    portNum,
+	}
 	log.Printf("Serving on %s", portNum)
-	http.ListenAndServe(portNum, nil)
+	log.Fatal(s.ListenAndServe())
+
+	// router := routes(&conf)
 
 }
