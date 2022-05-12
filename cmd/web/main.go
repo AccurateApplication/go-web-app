@@ -3,16 +3,25 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/AccurateApplication/go-web-app/pkg/config"
 	"github.com/AccurateApplication/go-web-app/pkg/handlers"
 	"github.com/AccurateApplication/go-web-app/pkg/render"
+	"github.com/alexedwards/scs/v2"
 )
 
 const portNum = ":8080"
 
 func main() {
 	var conf config.AppConf
+
+	// Initialize a new session manager and configure the session lifetime.
+	session := scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	session.Cookie.Secure = false
 
 	tc, err := render.CreateTmplCache()
 	if err != nil {
@@ -30,7 +39,4 @@ func main() {
 	}
 	log.Printf("Serving on %s", portNum)
 	log.Fatal(s.ListenAndServe())
-
-	// router := routes(&conf)
-
 }
