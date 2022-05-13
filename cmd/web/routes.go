@@ -11,7 +11,7 @@ import (
 func routes(conf *config.AppConf) http.Handler {
 	r := mux.NewRouter()
 	r.Use(LoadSession)
-	r.Use(noSurf)
+	r.Use(NoSurf)
 	r.HandleFunc("/about", handlers.Repo.AboutHandler)
 	r.HandleFunc("/", handlers.Repo.HelloHandler)
 	return r
