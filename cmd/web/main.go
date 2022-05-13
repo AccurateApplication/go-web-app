@@ -14,17 +14,20 @@ import (
 const portNum = ":8080"
 
 var conf config.AppConf
+var session *scs.SessionManager
 
 func main() {
 
 	conf.SecureSite = false
 
 	// Initialize a new session manager and configure the session lifetime.
-	session := scs.New()
+	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = conf.SecureSite
+
+	conf.Session = session
 
 	tc, err := render.CreateTmplCache()
 	if err != nil {
